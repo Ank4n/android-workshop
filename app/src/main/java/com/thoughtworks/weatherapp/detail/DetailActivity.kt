@@ -1,9 +1,10 @@
-package com.thoughtworks.weatherapp
+package com.thoughtworks.weatherapp.detail
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.thoughtworks.weatherapp.R
 
-class MainActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
