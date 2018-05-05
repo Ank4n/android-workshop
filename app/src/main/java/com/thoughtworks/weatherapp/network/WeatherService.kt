@@ -1,13 +1,35 @@
 package com.thoughtworks.weatherapp.network
 
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import com.thoughtworks.weatherapp.model.WeatherInfo
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
+import rx.Observable
 
-class WeatherService(val retrofitService: RetrofitService){
+private const val APP_ID = "e3d72b0711b57e4c8da67629201b3d60"
 
-    fun getWeatherByCity(city: String){
-        RetrofitService.Client.instance().getByCityName(city)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+interface WeatherService {
+    @GET("2.5/weather")
+    fun getByCityName(@Query("q") query: String,
+                      @Query("appid") appID: String = APP_ID)
+            : Observable<WeatherInfo>
+
+
+    object Client {
+
+        private const val BASE_URL = "http://api.openweathermap.org/data/"
+
+        private val retrofit: Retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build()
+
+        private val weatherAPIService = retrofit.create(WeatherService::class.java)
+
+        fun instance(): WeatherService = weatherAPIService
     }
+
 }
