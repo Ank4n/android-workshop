@@ -6,4 +6,5 @@ interface DetailView{
     fun updateWeather(weather: WeatherInfo)
     fun showLoader()
     fun hideLoader()
+    fun handleError()
 }

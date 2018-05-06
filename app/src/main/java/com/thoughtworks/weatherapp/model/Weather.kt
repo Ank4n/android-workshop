@@ -1,7 +1,7 @@
 package com.thoughtworks.weatherapp.model
 
 data class WeatherInfo(
-        val weather: List<Weather>,
+        var weather: List<Weather>,
         val main: Main,
         val wind: Wind,
         val dt: Int,

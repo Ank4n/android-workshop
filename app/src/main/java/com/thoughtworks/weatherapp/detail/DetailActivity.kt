@@ -8,6 +8,9 @@ import com.thoughtworks.weatherapp.network.WeatherService
 import kotlinx.android.synthetic.main.activity_main.*
 
 class DetailActivity : AppCompatActivity(), DetailView {
+    override fun handleError() {
+
+    }
 
     private lateinit var presenter: DetailPresenter
     private val weatherService: WeatherService = WeatherService.Client.instance()
@@ -16,8 +19,9 @@ class DetailActivity : AppCompatActivity(), DetailView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         presenter = DetailPresenter(this, weatherService)
-        presenter.fetchWeather()
+        presenter.onCreate()
     }
+
 
     override fun showLoader() {
 

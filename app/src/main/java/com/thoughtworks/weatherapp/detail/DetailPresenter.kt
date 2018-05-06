@@ -3,6 +3,7 @@ package com.thoughtworks.weatherapp.detail
 import com.thoughtworks.weatherapp.network.WeatherService
 import rx.Scheduler
 import rx.android.schedulers.AndroidSchedulers
+import rx.internal.operators.OperatorReplay.observeOn
 import rx.schedulers.Schedulers
 
 class DetailPresenter(
@@ -11,7 +12,7 @@ class DetailPresenter(
         private val processScheduler: Scheduler = Schedulers.io(),
         private val androidScheduler: Scheduler = AndroidSchedulers.mainThread()) {
 
-    fun fetchWeather() {
+    fun onCreate() {
         view.showLoader()
 
         retrofitService.getByCityName("Bangalore")
@@ -21,6 +22,10 @@ class DetailPresenter(
                         { weather ->
                             view.updateWeather(weather)
                             view.hideLoader()
+                        },
+                        { t -> view.hideLoader()
+                            view.handleError()
+
                         })
 
     }
